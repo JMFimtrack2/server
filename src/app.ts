@@ -1,20 +1,14 @@
-import dotenv from "dotenv";
-import express from "express";
-import env from "env-var";
+import dotenv from 'dotenv';
+dotenv.config()
+import express from 'express';
+import authRoutes from './routes/authRoutes'
 
-dotenv.config();
-const PORT = env.get('PORT').required().asPortNumber()
+const app = express()
 
-const app = express();
-app.use(express.json());
-
-console.log(PORT)
-console.log(process.env.PORT)
-console.log("Hell-o-ween");
+app.use(express.json())
 
 // Routes
-//app.use('/auth', authRoutes)
-// Auth
-// User
+app.use('/auth', authRoutes)
+app.use('/users', () => {})
 
-export default app;
+export default app
