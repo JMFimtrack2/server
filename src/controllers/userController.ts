@@ -4,9 +4,7 @@ import prisma from "../models/user";
 
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
-
     const { email, password } = req.body;
-
     if (!email) {
       res.status(400).json({ message: `El email es obligatorio`})
       return
@@ -15,7 +13,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
       res.status(400).json({ message: `El password es obligatorio`})
       return
     }
-
     const hashedPassword = await hashPassword(password);
     const user = await prisma.create(
       {
@@ -25,52 +22,42 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         }
       }
     );
-
     res.status(201).json(user)
     
   } catch (error: any) {
-
     if (error?.code === 'P2002' && error?.meta?.target?.includes('email')) {
       res.status(400).json({ message: `El email ingresado ya existe`})
       console.log('P2002');
     }
-
     console.log(error)
     res.status(500).json({ error: 'Hubo un error prueba mas tarde' })
-    
   }
 };
 
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {
-
     const users = await prisma.findMany();
     res.status(200).json(users);
     
   } catch (error: any) {
-
     console.log(error)
     res.status(500).json({ error: 'Hubo un error prueba mas tarde' })
-
   }
 };
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   const userId = parseInt(req.params.id);
   try {
-
     const user = await prisma.findUnique({
       where: {
         id: userId
       } 
     });
     res.status(200).json(user);
-
     if (!user) {
       res.status(404).json({ error: 'Usuario no encontrado'});
       return
     };
-
     res.status(200).json(user);
     
   } catch (error: any) {
@@ -83,18 +70,14 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
   const userId = parseInt(req.params.id);
   const { email, password } = req.body;
   try {
-
     let dataToUpdate: any = { ...req.body };
-
     if (password) {
       const hashedPassword = await hashPassword(password);
       dataToUpdate.password = hashedPassword;
     }
-
     if (email) {
       dataToUpdate.email = email;  
     }
-
     const user = await prisma.update({
       where: {
         id: userId
@@ -102,7 +85,6 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       data: dataToUpdate
 
     });
-
     res.status(200).json(user);
     
   } catch (error: any) {
@@ -125,7 +107,6 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
         id: userId
       }
     });
-
     res.status(200).json({
         message: `El usuario ${userId} ha sido eliminado`
     }).end()

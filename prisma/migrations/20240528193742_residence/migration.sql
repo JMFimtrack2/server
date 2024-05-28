@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "domicilio" ALTER COLUMN "estado" DROP NOT NULL,
+ALTER COLUMN "municipio" DROP NOT NULL,
+ALTER COLUMN "colonia" DROP NOT NULL,
+ALTER COLUMN "numero_int" DROP NOT NULL;

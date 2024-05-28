@@ -18,3 +18,48 @@ model user {
   email     String  @unique
   password  String
 }
+
+model cuenta {
+  id   Int      @id @default(autoincrement()) @unique
+  tipo String   @unique
+}
+
+model titular {
+  id                    Int    @id @default(autoincrement()) @unique
+  razon_social          String?
+  rfc                   String?
+  nombre                String
+  apellido_paterno      String
+  apellido_materno      String?
+  telefono_movil        String @unique
+  telefono_alternativo  String?
+  email                 String?
+  clave                 String?
+}
+
+model unidad {
+  id            Int @id @default(autoincrement()) @unique
+  serie         String @unique
+  motor         String?
+  placa         String?
+  valor         Int?
+  aseguradora   String?
+  marca         String
+  submarca      String
+  tipo          String
+  modelo        Int
+  color         String
+  localizada    String?
+  observaciones String?
+}
+
+model domicilio {
+  id            Int @id @default(autoincrement())
+  codigo_postal String
+  estado        String?
+  municipio     String?
+  colonia       String?
+  calle         String
+  numero_ext    Int
+  numero_int    Int?
+}
