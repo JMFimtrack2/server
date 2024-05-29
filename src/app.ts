@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+var cors = require('cors');
 
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
@@ -13,6 +14,7 @@ import residenceRoutes from './components/residence/residenceRoutes';
 dotenv.config();
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Routes
